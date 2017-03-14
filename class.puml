@@ -1,0 +1,36 @@
+@startuml
+
+class Game {
+ + winner
+ + turn
+ - current_player
+ + run()
+ + get_start_planet(player)
+ + send_spaceship(from_planet, to_planet, spaceship_class, num_spaceships)
+ + turn_start()
+ + next_player()
+ + get_current_player()
+ + add_player()
+}
+
+class Planetmap {
+    + planets
+    + __init__(size)
+    + turn_start(player)
+    + to_list()
+    + add_planet(planet_class, *args)
+}
+
+class Spaceshipmap {
+    + spaceships
+    + __init__(size)
+    + turn_start(player)
+    + to_list()
+    + add_spaceship(spaceship)
+    + del_spaceship(spaceship)
+}
+
+
+
+
+@enduml
