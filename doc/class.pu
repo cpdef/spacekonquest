@@ -1,0 +1,227 @@
+@startuml
+
+package logic <<Rectangle>> {
+namespace game {
+class Game {
+ + winner
+ + turn
+ + spaceshipmap
+ + planetmap
+ + players: list of Player
+ - current_player
+ + run()
+ + get_start_planet(player)
+ + send_spaceship(from_planet, to_planet, spaceship_class, num_spaceships)
+ + turn_start()
+ + next_player()
+ + get_current_player()
+ + add_player()
+ - __init__(planetmap_size)
+}
+
+class TestGame {
+    - some debug functions
+}
+}
+
+namespace planetmap {
+class Planetmap {
+    + planets
+    - __init__(size)
+    + turn_start(player)
+    + to_list()
+    + add_planet(planet_class, *args)
+}
+}
+namespace map_on_planet {
+class MapOnPlanet {
+    - __init__(size)
+    + size
+    + fields: list of Field
+    + turn_start(resources)
+    + to_list()
+    + build_building(pos, building_class, resources)
+    + generate()
+    + get_random_field()
+    + generate_commando_central()
+}
+
+class Field {
+    - __init__(ground, pos)
+    + ground: Ground
+    + pos: Vector
+    + content (building)
+    + build_building(map, building_class, resources)
+}
+}
+
+namespace mapgen {
+class NoiseMap {
+    - __init__(size, seed_ = round(time.time()*10**10))
+    - _show()
+    - _dummy_map()
+    + sinussinus_noise(pos, seed_ = None)
+    + sinus_noise(pos, seed_ = None)
+    + generate_noise(function, seed_ = None)
+    + to_ascii_art()
+    + normalize()
+    + reverse()
+    - __add__(obj)
+    + equalize_range(min_, max_, value)
+    + get_min()
+    + get_max()
+    + round()
+    + for_every(function)
+    + soft_focus()
+    + dualize()
+}
+}
+    
+namespace player {
+class Player {
+    - __init__(name, start_planet, game)
+    - _lost: Boolean
+    + start_planet
+    + name
+    + (game)
+    + turn_start()
+    + has_won()
+    + has_lost()
+    + get_own_planets(): list of Planets
+    + get_num_planets()
+    + get_num_spaceships()
+}
+}
+
+namespace planet {
+class Planet {
+    + id
+    + pos: Vector
+    + owner: Player
+    + resources: dict of Resource
+    + buildings: list of builing classes
+    - __init__(pos, id, size)
+    + get_+ence()
+    + to_start_planet(new_owner)
+    + attack(obj)
+    + build_buildng(player, pos, building_class)
+}
+}
+
+namespace spaceshipmap {
+class Spaceshipmap {
+    + spaceships
+    - __init__(size)
+    + turn_start(player)
+    + to_list()
+    + add_spaceship(spaceship)
+    + del_spaceship(spaceship)
+}
+}
+
+
+namespace spaceship {
+class SpaceShip {
+    - __init__(player, num, from_planet, to_planet)
+    + target: Planet
+    + pos: Vector
+    + owner: Player
+    + people
+    + robots
+    + {static} can_send(from_planet, num, player)
+    + on_step()
+    + get_attack()
+    + touchdown()
+}
+}
+
+
+namespace vector {
+class Vector {
+    - __init__(rows):
+    + rows
+    + x()
+    + y()
+    + z()
+    - __len__()
+    - __abs__():
+    - __add__(rows_vector):
+    - __sub__(rows_vector):
+    - __mul__(value):
+    + norm(value=1):
+    - __repr__():
+    - __eq__(vector):
+}
+}
+
+namespace buildings {
+class Resource <<(N,#FF7700) namedtuple >> {
+   + name
+   + num
+}
+
+class Building {
+    - __init__(field, map, resources=None)
+   + need: list of Productions 
+   + {static} can_build(cls, field, map, resources)
+   + get_production()
+   + turn_start()
+}
+
+class Production {
+    - __init__(use, produce)
+   + use, produce: list of Resources
+   + make(resources)
+}
+
+}
+
+
+
+
+
+namespace grounds {
+class Ground <<(N,#FF7700) namedtuple >> {
+    + name
+}
+}
+
+
+namespace util {
+class Size <<(N,#FF7700) namedtuple >> {
+    + width, height
+}
+
+class Point <<(N,#FF7700) namedtuple >> {
+    + x,y
+}
+}
+
+note "used by many classes as attribute" as note1
+note1 .. vector.Vector
+note1 .. util
+
+}
+
+game.Game *-- spaceshipmap.Spaceshipmap
+game.Game *-- planetmap.Planetmap
+game.Game *-- player.Player
+planetmap.Planetmap *-- planet.Planet
+spaceshipmap.Spaceshipmap *-- spaceship.SpaceShip
+planet.Planet *-- map_on_planet.MapOnPlanet
+map_on_planet.MapOnPlanet *-- map_on_planet.Field
+map_on_planet.Field *-- buildings.Building
+map_on_planet.Field *-- grounds.Ground
+buildings.Building *-- buildings.Production
+buildings.Building *-- buildings.Resource : need
+buildings.Production *-- buildings.Resource : use,produce
+mapgen.NoiseMap -- map_on_planet.MapOnPlanet
+
+
+
+
+
+
+
+
+@enduml
