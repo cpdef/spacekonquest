@@ -68,11 +68,6 @@ class CommandoCentral(Building):
     def can_build(self):
         print('buildings:    CommandoCentral not buildiable by player!')
         return False
-            
-    def turn_start(self, resources):
-        resources['steel'] += 10
-        resources['people'] += 10
-        return resources
         
     def get_production(self):
         steel = Resource('steel', 10)
@@ -86,12 +81,6 @@ class Farm(Building):
     need = [Resource('energy', 5)]
     def __init__(self, field, map, resources):
         super().__init__(field, map, resources)
-            
-    def turn_start(self, resources):
-        if resources['energy'] > 2:
-            resources['energy'] -= 2
-            resources['food'] += 10
-        return resources
         
     def get_production(self):
         energy = Resource('energy', 5)
@@ -106,13 +95,6 @@ class Mine(Building):
     need = [Resource('energy', 100)]
     def __init__(self, field, map, resources):
         super().__init__(field, map, resources)
-
-    def turn_start(self, resources):
-        if resources['energy'] > 20:
-            resources['coal'] += randrange(10)
-            resources['steel'] += randrange(5)
-            resources['uranium'] += randrange(2)
-        return resources
         
     def get_production(self):
         energy = Resource('energy', 20)
@@ -129,11 +111,6 @@ class RobotProduction(Building):
     need = [Resource('energy', 200),  Resource('steel', 100)]
     def __init__(self, field, map, resources):
         super().__init__(field, map, resources)
-            
-    def turn_start(self, resources):
-        if resources['energy'] > 10:
-            resources['robots'] += 5
-        return resources
         
     def get_production(self):
         energy = Resource('energy', 10)
@@ -148,10 +125,6 @@ class WindGenerator(Building):
     need = [Resource('steel', 10)]
     def __init__(self, field, map, resources):
         super().__init__(field, map, resources)
-            
-    def turn_start(self, resources):
-        resources['energy'] += 5
-        return resources
         
     def get_production(self):
         energy = Resource('energy', 10)
@@ -165,12 +138,6 @@ class NuclearGenerator(Building):
     need = [Resource('energy', 300), Resource('steel', 200)]
     def __init__(self, field, map, resources):
         super().__init__(field, map, resources)
-            
-    def turn_start(self, resources):
-        if resources['uranium'] > 1:
-            resources['uranium'] -= 1
-            resources['energy'] += 100
-        return resources
         
     def get_production(self):
         energy = Resource('energy', 100)
@@ -185,12 +152,6 @@ class CoalGenerator(Building):
     need = [Resource('energy', 150),  Resource('steel', 50)]
     def __init__(self, field, map, resources):
         super().__init__(field, map, resources)
-            
-    def turn_start(self, resources):
-        if resources['coal'] > 2:
-            resources['coal'] -= 1
-            resources['energy'] += 20
-        return resources
         
     def get_production(self):
         energy = Resource('energy', 30)

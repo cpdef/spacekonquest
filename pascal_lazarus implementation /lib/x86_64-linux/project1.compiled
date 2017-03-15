@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="/usr/bin/fpc" Date="1397983219"/>
+  <Params Value=" -MObjFPC -Scghi -Cg -O1 -g -gl -l -vewnhibq &quot;-Fi/home/evg1621/Informatik/12.2 Infoprojekt/lib/x86_64-linux&quot; -Fl/opt/gnome/lib -Fu/usr/share/lazarus/1.4.0/lcl/units/x86_64-linux/gtk2 -Fu/usr/share/lazarus/1.4.0/lcl/units/x86_64-linux -Fu/usr/share/lazarus/1.4.0/components/lazutils/lib/x86_64-linux -Fu/usr/share/lazarus/1.4.0/packager/units/x86_64-linux &quot;-Fu/home/evg1621/Informatik/12.2 Infoprojekt/&quot; &quot;-FU/home/evg1621/Informatik/12.2 Infoprojekt/lib/x86_64-linux/&quot; -dLCL -dLCLgtk2 project1.lpr"/>
+  <Complete Value="False"/>
+</CONFIG>
