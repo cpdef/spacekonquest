@@ -1,0 +1,80 @@
+  @startuml
+  
+  TGame = class
+   ships: array of TSpaceship;
+   map: array of array of integer;
+   planets: array of TPlanet;
+   players: array of TPlayer;
+   constructor create(nx, ny, new_player_nr, planet_nr: integer);
+   procedure next_player();
+   procedure click_on_screen(x, y:integer);
+   procedure refresh_screen();
+   procedure set_startplanet(planet_id:integer);
+   procedure set_targetplanet(planet_id:integer);
+   procedure reset_labels();
+   function send(nr: integer): boolean;
+   function get_planet_info(planet_id, player: integer): string;
+   private
+   turn, player_on_turn, zoom, startplanet, targetplanet, player_nr, x, y: integer;
+  end;
+   
+     TForm1 = class(TForm)
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Button6: TButton;
+    Edit1: TEdit;
+    Image1: TImage;
+    Label1: TLabel;
+    Label2: TLabel;
+    DEBUGLABEL: TLabel;
+    Infolabel: TLabel;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Edit1KeyPress(Sender: TObject; var Key: char);
+    procedure FormCreate(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
+  private
+    { private declarations }
+  public
+    { public declarations }
+  end;
+    
+    TSpaceship = class
+   owner, nr, tx, ty: integer;
+   x, y: real;
+   function get_attack():integer;
+   function on_step(player_on_turn: integer):boolean;
+   constructor create(nx, ny, ntx, nty, nowner, nnr, neffective:integer);
+   private
+   effective: integer;
+   vx, vy: real;
+  end;
+   
+   type TPlayer = class
+  color: tcolor;
+  ID: integer;
+  iski: boolean;
+  procedure new_color();
+  constructor create(new_id: integer; new_iski:boolean);
+end;
+   
+   TPlanet = class
+ owner, production, ships, kill_percent, x, y: integer;
+ color: tcolor;
+ name: string;
+ function send_ships(nr: integer; target:TPlanet): TSpaceship;
+ procedure turn_start(player_on_turn: integer);
+ procedure touch_down(nr, effective, player: integer);
+ constructor create(newowner, tx, ty:integer; home_planet: boolean);
+ procedure new_name();
+ procedure new_color();
+end;
+
+@enduml
